@@ -28,3 +28,18 @@ test("add todo", () => {
 	expect(table).toHaveTextContent((/go to coffee/i));
 });
 
+test("Delete todo", () => {
+	render(<App />);
+	const desc = screen.getByPlaceholderText("Description");
+	fireEvent.change(desc, {target: {value:"Go to coffee"}});
+	const date =screen.getByPlaceholderText("Date");
+	fireEvent.change(date, {target:{value:"29.01.2023"}});
+	const Add_button = screen.getByText("Add");
+	fireEvent.click(Add_button);
+	const table = screen.getByRole("table");
+	expect(table).toHaveTextContent((/go to coffee/i));
+	const Delete_button = screen.getByText("Delete");
+	fireEvent.click(Delete_button);
+	expect(table).not.toHaveTextContent((/go to coffee/i));
+});
+
